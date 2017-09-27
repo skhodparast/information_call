@@ -1,0 +1,67 @@
+body {
+    overflow-x: hidden;
+    margin: 0;
+    font-family: Yekan;
+    position: relative;
+}
+@font-face {
+    font-family: 'Yekan';
+    src: url('../fonts/Yekan.otf?#'),
+    url('../fonts/Yekan.ttf') format('truetype');
+}
+.text_center{
+    text-align: center;
+}
+.b_dark{
+    background-color: #d2cfc8;
+}
+.color_red{
+    color: red;
+}
+.color_blue{
+    color:#2aabd2;
+}
+.color_greenyellow{
+    color: greenyellow;
+}
+.b_green{
+    background-color: green;
+}
+.b_gray{
+    background-color: #ced2cd;
+}
+.margin_top_10{
+    margin-top: 10px;
+}
+.margin_top_20{
+    margin-top: 20px;
+}
+.margin_top_50{
+    margin-top: 50px;
+}
+.padding_2{
+    padding: 2px;
+}
+.padding_5{
+    padding: 5px;
+}
+.padding_top_5{
+    padding-top: 5px;
+}
+.table_main {
+    width: 100%;
+    margin: 5px 0 5px 0;
+    border: 1px solid black !important;
+}
+.table_main tr th {
+    background-color: #2be1ff;
+    border-bottom: 1px solid black;
+}
+.table_th_center tr th {
+    text-align: center;
+}
+.button_standard{
+    min-height: 40px;
+    min-width: 180px;
+    margin-top: 10px;
+}

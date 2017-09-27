@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="{{ static_url('Angular-Js/js/AngularJS.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('plugin/js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('plugin/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ static_url('Angular-Js/mainApp.js') }}"></script>
+    <script src="{{ static_url('Angular-Js/Controlers/Update.js') }}"></script>
+    <link type="text/css" rel="stylesheet" href="{{ static_url('plugin/bootstrap/css/bootstrap.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ static_url('plugin/bootstrap/css/bootstrap-rtl.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ static_url('css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>ویرایش 118</title>
+</head>
+<body>
+<div class="row">
+    <div id="right" class="col-lg-6 col-md-6 col-md-offset-3 col-lg-offset-3">
+        <div class="text-center margin_top_20"><h2><b>قسمت ویرایش اطلاعات 118 دانشگاه بزرگمهر قائنات</b></h2></div>
+        <div ng-app="myApp" ng-controller="updatephone"
+             class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 margin_top_50">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 text-center"><b>شماره ی اصلی دانشگاه</b></div>
+                <div class="col-lg-5 col-md-5">
+                    <input id="phone_university" ng-model="model_phone_university"
+                                                      ng-init="model_phone_university = {{ university[0]['phone'] }}">
+                </div>
+                <div class="col-lg-3 col-md-3">
+                    <button class="col-lg-12 col-md-12" id="save_phone_university" ng-click="button_phone_university()">
+                        <b>ذخیره شماره</b></button>
+                </div>
+            </div>
+            <div ng-model="status_phone_university" id="message_phone_university" class="text-center"
+                 style="display: block">
+                <h4 ng-if="status_phone_university.true" class="color_greenyellow"><b>شماره ی دانشگاه تغییر یافت</b>
+                </h4>
+                <h4 ng-if="status_phone_university.false" class="color_red"><b>خطای دیتابیس</b></h4>
+            </div>
+            <div class="row margin_top_10 text-center">
+                <div class="col-lg-4 col-md-4"><h5><b>افزودن یک گروه</b></h5></div>
+                <div class="col-lg-5 col-md-5 padding_top_5">
+                    <input id="input_insert_groupp">
+                </div>
+                <div class="col-lg-3 col-md-3 padding_top_5">
+                    <button class="col-lg-12 col-ml-12 color_blue"
+                            id="button_insert_group" ng-click="insert_group()">افزودن گروه
+                    </button>
+                </div>
+            </div>
+            <div ng-model="status_insert_group" id="message_insert_group" class="text-center" style="display: block">
+                <h4 ng-if="status_insert_group.true" class="color_greenyellow"><b>گروه مورد نظر شما افزوده شد، شما می
+                    توانید از انتهای لیست آنرا انتخاب و تغییر دهید</b></h4>
+                <h4 ng-if="status_insert_group.false" class="color_red"><b>خطای دیتابیس</b></h4>
+            </div>
+            <div class="row margin_top_10 text-center">
+                <div class="col-lg-4 col-md-4"><h5><b>انتخاب یک گروه</b></h5></div>
+                <div class="col-lg-5 col-md-5 padding_top_5">
+                    <select id="name_groups" name="name_groups" ng-model="mgroup" ng-init="mgroup = 0"
+                            ng-change="fun_group()" class="col-md-12">
+                        <option id="selected_group_0" value="0" selected>انتخاب کنید</option>
+                        {% for item in select_qroup %}
+                        <option id="selected_group_{{ item['id'] }}"
+                                value="{{ item['id'] }}">{{ item['name'] }}</option>
+                        {% end for %}
+                    </select>
+                </div>
+                <div class="col-lg-3 col-md-3 padding_top_5" id="delete_table"
+                     style="display: block">
+                    <button class="col-lg-12 col-ml-12 color_red"
+                            id="delete_table_buttom" ng-click="delete_tablee()">حذف گروه
+                    </button>
+                </div>
+            </div>
+            <div ng-model="delete_table" id="message_delete_table" class="text-center" style="display: block">
+                <h4 ng-if="delete_table.true" class="color_greenyellow"><b>گروه مورد نظر با موفقیت حذف گردید</b></h4>
+                <h4 ng-if="delete_table.false" class="color_red"><b>خطای دیتابیس</b></h4>
+            </div>
+            <div ng-show="div_update_insert" class="row">
+                <div class="col-lg-4 col-md-4"><h4 class="col-lg-12 col-ml-12"><b>افزودن تلفن :</b></h4></div>
+                <div class="col-lg-3 col-md-3 padding_top_5"><input class="col-lg-12 col-ml-12"
+                                                                    id="title_update_insert"></div>
+                <div class="col-lg-3 col-md-3 padding_top_5"><input class="col-lg-12 col-ml-12"
+                                                                    id="phone_update_insert"></div>
+                <div class="col-lg-2 col-md-2 padding_top_5">
+                    <button class="col-lg-12 col-ml-12" id="id_group_update_insert" ng-click="fun_update_insert()"
+                            value="{$ name_group.id $}">ذخیره
+                    </button>
+                </div>
+            </div>
+            <div ng-model="status_update_insert" id="message_update_insert" class="text-center" style="display: block">
+                <h4 ng-if="status_update_insert.true" class="color_greenyellow"><b>شماره ی مورد نظر ثبت گردید</b></h4>
+                <h4 ng-if="status_update_insert.false" class="color_red"><b>خطای دیتابیس</b></h4>
+            </div>
+            <div ng-show="div_update" class="row">
+                <div class="col-lg-4 col-md-4"><h4 class="col-lg-12 col-ml-12"><b>ویرایش تلفن :</b></h4></div>
+                <div class="col-lg-3 col-md-3 padding_top_5"><input class="col-lg-12 col-ml-12" id="title_update"></div>
+                <div class="col-lg-3 col-md-3 padding_top_5"><input class="col-lg-12 col-ml-12" id="phone_update"></div>
+                <div class="col-lg-2 col-md-2 padding_top_5">
+                    <button class="col-lg-12 col-ml-12" id="id_update" ng-click="fun_save_update()">ذخیره</button>
+                </div>
+            </div>
+            <div ng-model="status" id="message_update" class="text-center" style="display: block">
+                <h4 ng-if="state.true" class="color_greenyellow"><b>اطلاعات مورد نظر تغییر یافت</b></h4>
+                <h4 ng-if="state.false" class="color_red"><b>خطای دیتابیس</b></h4>
+            </div>
+            <div ng-show="div_update_group">
+                <div class="col-lg-4 col-md-4"><h4 class="col-lg-12 col-ml-12"><b>ویرایش گروه : </b></h4></div>
+                <div class="col-lg-4 col-md-4"><input class="col-lg-12 col-ml-12" id="group_update"></div>
+                <div class="col-lg-4 col-md-4">
+                    <button class="col-lg-6 col-ml-6" id="id_update_group" ng-click="fun_save_update_group()">ذخیره
+                    </button>
+                </div>
+            </div>
+            <div ng-model="status_group" id="message_update_group" class="text-center" style="display: block">
+                <h4 ng-if="status_group.true" class="color_greenyellow"><b>اطلاعات مورد نظر تغییر یافت</b></h4>
+                <h4 ng-if="status_group.false" class="color_red"><b>خطای دیتابیس</b></h4>
+            </div>
+            <div ng-model="phone_delete" id="message_delete" class="text-center" style="display: block">
+                <h4 ng-if="phone_delete.true" class="color_greenyellow"><b>شماره ی مورد نظر حذف گردید</b></h4>
+                <h4 ng-if="phone_delete.false" class="color_red"><b>خطای دیتابیس</b></h4>
+            </div>
+            <table id="tbody_update"
+                   class="table-responsive table-striped table_main text-center col-lg-12 col-md-12 margin_top_10 padding_2">
+                <thead ng-model="name_group">
+                <tr ng-if="name_group.name">
+                    <th colspan="3" id="show_update_qroup" class="text-center padding_5">
+                        {$ name_group.name $}
+                    </th>
+                    <th class="padding_5">
+                        <button colspan="1" ng-click="fun_change_group()" value="{$ name_group.id $}">آپدیت
+                            گروه
+                        </button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="tr_update{$ ng.id $}" ng-repeat=" ng in phones_group"
+                    ng-init="title=ng.title; phone=ng.phone; id_group=ng.id"
+                    class="padding_5">
+                    <td class="padding_2" id="title{$ ng.id $}">{$ title $}</td>
+                    <td class="padding_2" id="phone{$ ng.id $}">{$ phone $}</td>
+                    <td class="padding_2">
+                        <button ng-click="fun_change()" id="show_update" value="{$ id_group $}" class="color_blue"><b>آپدیت</b>
+                        </button>
+                    </td>
+                    <td class="padding_2">
+                        <button ng-click="fun_delete()" id="delete" value="{$ id_group $}" class="color_red"><b>حذف</b>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
